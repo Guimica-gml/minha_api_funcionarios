@@ -1,0 +1,20 @@
+{
+    "name": "minha_api_funcionarios",
+    "version": "1.0.0",
+    "description": "API para controle de functionários",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "keywords": [],
+    "author": "Nicholas Almeida Albuquerque, Anderson dos Santos Ribeiro Júnior, Gabriel Bomfim Silva, Juan Carlos Barbosa de Jesus, Leandro Oliveira Martins Filho, Paulo Henrique Alves Rodrigues dos Santos, Yago Amâncio Ribeiro",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^5.1.0",
+        "mysql2": "^3.14.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.10"
+    }
+}
