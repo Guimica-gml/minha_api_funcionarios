@@ -21,6 +21,18 @@ connection.connect((err) => {
 
 module.exports = connection;
 
+app.post("/funcionarios", (req, res) => {
+  const { nome, cargo, salario } = req.body;
+  const query =
+    "INSERT INTO funcionarios (nome, cargo, salario) VALUES (?, ?, ?)";
+  connection.query(query, [nome, cargo, salario], (err, result) => {
+    if (err) {
+      return res.status(500).json({ erro: "Erro no servidor" });
+    }
+    res.status(201).json({ id: result.insertId, nome, cargo, salario });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
