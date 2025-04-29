@@ -69,6 +69,20 @@ app.put("/funcionarios/:id", (req, res) => {
   });
 });
 
+app.delete("/funcionarios/:id", (req, res) => {
+    const { id } = req.params;
+    const query = "DELETE FROM funcionarios WHERE id = ?";
+    connection.query(query, [id], (err, results) => {
+        if (err) {
+            return res.status(500).send("Erro no servidor");
+        }
+        if (results.affectedRows <= 0) {
+            res.status(400).json({ "mensagem": `Não foi possível encontrar funcionário com id ${id}` });
+        }
+        res.status(200).json({ "mensagem": `Usuário com id ${id} foi removido com sucesso!` });
+    });
+});
+
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
