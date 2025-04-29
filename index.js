@@ -57,6 +57,18 @@ app.get("/funcionarios/:id", (req, res) => {
     });
 });
 
+app.put("/funcionarios/:id", (req, res) => {
+  const { id } = req.params;
+  const { nome, cargo, salario } = req.body;
+  const query = "UPDATE funcionarios SET nome = ?, cargo = ?, salario = ? WHERE id = ?";
+  connection.query(query, [nome, cargo, salario, id], (err, results) => {
+      if (err) {
+          return res.status(500).json({ "erro": "Erro no servidor" });
+      }
+      res.status(200).json({ nome, cargo, salario });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
