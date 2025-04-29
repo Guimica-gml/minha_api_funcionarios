@@ -1,0 +1,279 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Minha API Funcionários",
+    "description": "Uma API para controle de funcionários em uma empresa.",
+    "version": "1.0"
+  },
+  "externalDocs": {
+    "description": "Repositório do Github com o código fonte da API.",
+    "url": "https://github.com/Guimica-gml/minha_api_funcionarios"
+  },
+  "servers": [
+    {
+      "url": "to be done"
+    }
+  ],
+  "tags": [
+    {
+      "name": "funcionarios",
+      "description": "Requests para o banco de dados dos funcionários"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Funcionario": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "cargo": { "type": "string" },
+          "salario": { "type": "number", "format": "float" }
+        },
+        "required": ["id", "name", "cargo", "salario"]
+      },
+      "ListaDeFuncionarios": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Funcionario"
+        }
+      },
+      "Mensagem": {
+        "type": "object",
+        "properties": {
+          "mensagem": { "type": "string" }
+        }
+      },
+      "ErroNoServidor": {
+        "type": "object",
+        "properties": {
+          "erro": { "type": "string" }
+        }
+      },
+      "Empty": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  },
+  "paths": {
+    "/funcionario": {
+      "post": {
+        "tags": ["funcionarios"],
+        "summary": "Adiciona um novo funcionário.",
+        "description": "Adiciona um novo funcionário no banco de dados.",
+        "operationId": "addFuncionario",
+        "requestBody": {
+          "description": "Um objeto JSON contento nome, cargo e salário.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Funcionario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Funcionário adicionado com sucesso. O objeto JSON do funcionário adicionado será retornado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Funcionario"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroNoServidor"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["funcionarios"],
+        "summary": "Retorna a lista de funcionários.",
+        "description": "Retorna a lista de todos funcionários no banco de dados.",
+        "operationId": "getFuncionarios",
+        "responses": {
+          "200": {
+            "description": "Lista de funcionários retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaDeFuncionarios"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroNoServidor"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/funcionario/{id}": {
+      "get": {
+        "tags": ["funcionarios"],
+        "summary": "Retorna um funcionário com ID específico.",
+        "description": "Retorna o objeto JSON do funcionário com ID fornecido pelo usuário.",
+        "operationId": "getFuncionario",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "O ID do funcionario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Funcionário retornado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Funcionario"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID não foi encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mensagem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroNoServidor"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["funcionarios"],
+        "summary": "Atualiza o funcionário com ID recebido.",
+        "description": "Atualiza as informações do funcionário com ID recebido.",
+        "operationId": "putFuncionario",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "O ID do funcionario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Um objeto JSON contento o novo nome, cargo e salário do funcionário.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Funcionario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "As informações do funcionário foram atualizadas com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Funcionario"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroNoServidor"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["funcionarios"],
+        "summary": "Deleta o funcionário com ID recebido.",
+        "description": "Deleta o funcionário com ID recebido.",
+        "operationId": "deleteFuncionario",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "O ID do funcionario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "As informações do funcionário foram deletadas com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Funcionario"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID não foi encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mensagem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroNoServidor"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
