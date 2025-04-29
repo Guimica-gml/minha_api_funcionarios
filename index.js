@@ -33,6 +33,16 @@ app.post("/funcionarios", (req, res) => {
   });
 });
 
+app.get("/funcionarios", (req, res) => {
+  connection.query("SELECT * FROM funcionarios", (err, results) => {
+    if (err) {
+      console.error("Erro ao buscar usuários:", err);
+      return res.status(500).json({ erro: "Erro no servidor" });
+    }
+    res.status(200).json(results);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
