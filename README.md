@@ -2,6 +2,17 @@
 
 Uma API para controle de funcionários em uma empresa.
 
+## Integrantes do grupo
+
+Grupo 2:
+- Nicholas Almeida Albuquerque
+- Anderson dos Santos Ribeiro Júnior
+- Gabriel Bomfim Silva
+- Yago Amâncio Ribeiro
+- Leandro Oliveira Martins Filho
+- Juan Carlos Barbosa de Jesus
+- Paulo Henrique Alves Rodrigues dos Santos
+
 ## Banco de Dados
 
 A API usa [mysql](https://www.mysql.com/) como banco de dados.
