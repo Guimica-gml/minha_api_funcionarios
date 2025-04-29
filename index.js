@@ -43,6 +43,20 @@ app.get("/funcionarios", (req, res) => {
   });
 });
 
+app.get("/funcionarios/:id", (req, res) => {
+    const { id } = req.params;
+    const query = "SELECT * FROM funcionarios WHERE id = ?";
+    connection.query(query, [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ "erro": "Erro no servidor" });
+        }
+        if (results.length <= 0) {
+            return res.status(400).json({ "mensagem": `Não foi possível encontrar funcionário com id ${id}` });
+        }
+        res.status(200).json(results[0]);
+    });
+});
+
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
