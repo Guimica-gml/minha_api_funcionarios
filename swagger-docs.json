@@ -17,7 +17,7 @@
   "tags": [
     {
       "name": "funcionarios",
-      "description": "Requests para o banco de dados dos funcionários"
+      "description": "Requisições para o banco de dados dos funcionários"
     }
   ],
   "components": {
@@ -63,7 +63,7 @@
         "description": "Adiciona um novo funcionário no banco de dados.",
         "operationId": "addFuncionario",
         "requestBody": {
-          "description": "Um objeto JSON contento nome, cargo e salário.",
+          "description": "Um objeto JSON contendo o nome, cargo e salário.",
           "content": {
             "application/json": {
               "schema": {
@@ -99,7 +99,7 @@
       "get": {
         "tags": ["funcionarios"],
         "summary": "Retorna a lista de funcionários.",
-        "description": "Retorna a lista de todos funcionários no banco de dados.",
+        "description": "Retorna uma lista com todos os funcionários no banco de dados.",
         "operationId": "getFuncionarios",
         "responses": {
           "200": {
@@ -192,7 +192,7 @@
           }
         ],
         "requestBody": {
-          "description": "Um objeto JSON contento o novo nome, cargo e salário do funcionário.",
+          "description": "Um objeto JSON contendo o novo nome, cargo e salário do funcionário.",
           "content": {
             "application/json": {
               "schema": {
