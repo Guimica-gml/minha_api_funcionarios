@@ -40,4 +40,4 @@ Se o seu computador não estiver configurado para rodar python através do coman
 $ python -m http.server 8080
 ```
 
-Depois basta apenas acessar o link `http://0.0.0.0:8080` para ler a docuentação da API.
+Depois basta apenas acessar o link `http://0.0.0.0:8080/swagger-docs.html` para ler a docuentação da API.
