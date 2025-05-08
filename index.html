@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Usuários</title>
+  <style>
+    /* Resetando margens e preenchimentos */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Estilo do corpo da página */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 0;
+    }
+
+    /* Contêiner principal */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    /* Estilo das abas */
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      background-color: #007BFF;
+      color: #fff;
+      padding: 10px 0;
+      cursor: pointer;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .tab:hover,
+    .tab.active {
+      background-color: #0056b3;
+    }
+
+    /* Conteúdo das abas */
+    .tab-content {
+      display: none;
+      padding: 20px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Estilo dos formulários */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+
+    button {
+      padding: 12px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    /* Estilo da tabela */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    .actions button {
+      background-color: #dc3545;
+      border: none;
+      padding: 5px 10px;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .actions button:hover {
+      background-color: #c82333;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tab {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" onclick="showTab(0)">Adicionar Usuário</div>
+      <div class="tab" onclick="showTab(1)">Remover Usuário</div>
+      <div class="tab" onclick="showTab(2)">Atualizar Usuário</div>
+    </div>
+
+    <div class="tab-content active">
+      <h2>Adicionar Usuário</h2>
+      <form id="add-user-form">
+        <label for="add-name">Nome:</label>
+        <input type="text" id="add-name" name="name" required>
+        <label for="add-position">Cargo:</label>
+        <input type="text" id="add-position" name="position" required>
+        <label for="add-salary">Salário:</label>
+        <input type="number" id="add-salary" name="salary" required>
+        <button type="submit">Adicionar usuário</button>
+      </form>
+    </div>
+
+    <div class="tab-content">
+      <h2>Remover Usuário</h2>
+      <form id="remove-user-form">
+        <label for="remove-id">ID do Usuário:</label>
+        <input type="number" id="remove-id" name="id" required>
+        <button type="submit">Remover usuário</button>
+      </form>
+    </div>
+
+    <div class="tab-content">
+      <h2>Atualizar Usuário</h2>
+      <form id="update-user-form">
+        <label for="update-id">ID:</label>
+        <input type="number" id="update-id" name="id" required>
+        <label for="update-name">Nome:</label>
+        <input type="text" id="update-name" name="name" required>
+        <label for="update-position">Cargo:</label>
+        <input type="text" id="update-position" name="position" required>
+        <label for="update-salary">Salário:</label>
+        <input type="number" id="update-salary" name="salary" required>
+        <button type="submit">Atualizar usuário</button>
+      </form>
+    </div>
+
+    <h2>Lista de Usuários</h2>
+    <table id="user-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Cargo</th>
+          <th>Salário</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Linhas serão adicionadas dinamicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function showTab(index) {
+      const tabs = document.querySelectorAll('.tab');
+      const contents = document.querySelectorAll('.tab-content');
+
+      tabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
+      });
+
+      contents.forEach((content, i) => {
+        content.classList.toggle('active', i === index);
+      });
+    }
+
+  // Função para alternar entre as abas
+  function showTab(index) {
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach((tab, i) => {
+      tab.classList.toggle('active', i === index);
+      contents[i].classList.toggle('active', i === index);
+    });
+  }
+
+  // Função para adicionar um usuário
+  document.getElementById('add-user-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('add-name').value;
+    const position = document.getElementById('add-position').value;
+    const salary = parseFloat(document.getElementById('add-salary').value);
+
+    const user = { "nome": name, "cargo": position, "salario": salary };
+
+    try {
+      const response = await fetch('http://127.0.0.1:3000/funcionarios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) {
+        alert('Erro ao adicionar usuário.');
+      }
+    } catch (error) {
+      console.error('Erro de rede:', error);
+      alert('Erro ao se comunicar com o servidor.');
+    }
+
+    preencherTabela();
+  });
+
+  // Função para remover um usuário
+  document.getElementById('remove-user-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const id = parseInt(document.getElementById('remove-id').value);
+
+    try {
+      const response = await fetch(`http://127.0.0.1:3000/funcionarios/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        alert('Usuário não existe.');
+      }
+    } catch (error) {
+      console.error('Erro de rede:', error);
+      alert('Erro ao se comunicar com o servidor.');
+    }
+
+    preencherTabela();
+  });
+
+  // Função para atualizar um usuário
+  document.getElementById('update-user-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const id = parseInt(document.getElementById('update-id').value);
+    const name = document.getElementById('update-name').value;
+    const position = document.getElementById('update-position').value;
+    const salary = parseFloat(document.getElementById('update-salary').value);
+
+    const user = { "nome": name, "cargo": position, "salario": salary };
+
+    try {
+      const response = await fetch(`http://127.0.0.1:3000/funcionarios/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) {
+        alert('Erro ao atualizar usuário.');
+      }
+    } catch (error) {
+      console.error('Erro de rede:', error);
+      alert('Erro ao se comunicar com o servidor.');
+    }
+
+    preencherTabela();
+  });
+
+  // Função para preencher a tabela com os dados dos funcionários
+function preencherTabela() {
+  // Realiza a requisição para a URL dos funcionários
+  fetch('http://127.0.0.1:3000/funcionarios')
+    .then(response => response.json()) // Converte a resposta para JSON
+    .then(data => {
+      // A referência para o corpo da tabela
+      const tabelaBody = document.querySelector('#user-table tbody');
+
+      // Limpa a tabela antes de adicionar novas linhas
+      tabelaBody.innerHTML = '';
+
+      // Itera sobre os dados dos funcionários e cria uma linha para cada um
+      data.forEach(funcionario => {
+        // Cria uma nova linha na tabela
+        const tr = document.createElement('tr');
+
+        // Cria e adiciona as células para cada dado do funcionário
+        const tdId = document.createElement('td');
+        tdId.textContent = funcionario.id;
+        tr.appendChild(tdId);
+
+        const tdNome = document.createElement('td');
+        tdNome.textContent = funcionario.nome;
+        tr.appendChild(tdNome);
+
+        const tdCargo = document.createElement('td');
+        tdCargo.textContent = funcionario.cargo;
+        tr.appendChild(tdCargo);
+
+        const tdSalario = document.createElement('td');
+        tdSalario.textContent = funcionario.salario;
+        tr.appendChild(tdSalario);
+
+        // Adiciona a linha completa à tabela
+        tabelaBody.appendChild(tr);
+      });
+    })
+    .catch(error => {
+      console.error('Erro ao carregar os dados dos funcionários:', error);
+    });
+}
+
+    // Chama a função para preencher a tabela assim que o script for carregado
+    preencherTabela();
+  </script>
+
+</body>
+</html>
