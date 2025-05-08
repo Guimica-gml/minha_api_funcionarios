@@ -66,6 +66,9 @@ app.put("/funcionarios/:id", (req, res) => {
       if (err) {
           return res.status(500).json({ "erro": "Erro no servidor" });
       }
+      if (results.affectedRows <= 0) {
+        res.status(400).json({ "mensagem": `Não foi possível encontrar funcionário com id ${id}` });
+      }
       res.status(200).json({ nome, cargo, salario });
   });
 });
