@@ -11,7 +11,8 @@
   },
   "servers": [
     {
-      "url": "to be done"
+      "url": "http://127.0.0.1:3000",
+      "description": "Server Produção"
     }
   ],
   "tags": [
@@ -25,11 +26,23 @@
       "Funcionario": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "cargo": { "type": "string" },
-          "salario": { "type": "number", "format": "float" }
+          "nome": {
+            "type": "string"
+          },
+          "cargo": {
+            "type": "string"
+          },
+          "salario": {
+            "type": "number",
+            "format": "float"
+          }
         },
-        "required": ["id", "name", "cargo", "salario"]
+        "required": [
+          "id",
+          "name",
+          "cargo",
+          "salario"
+        ]
       },
       "ListaDeFuncionarios": {
         "type": "array",
@@ -40,13 +53,17 @@
       "Mensagem": {
         "type": "object",
         "properties": {
-          "mensagem": { "type": "string" }
+          "mensagem": {
+            "type": "string"
+          }
         }
       },
       "ErroNoServidor": {
         "type": "object",
         "properties": {
-          "erro": { "type": "string" }
+          "erro": {
+            "type": "string"
+          }
         }
       },
       "Empty": {
@@ -56,9 +73,11 @@
     }
   },
   "paths": {
-    "/funcionario": {
+    "/funcionarios": {
       "post": {
-        "tags": ["funcionarios"],
+        "tags": [
+          "funcionarios"
+        ],
         "summary": "Adiciona um novo funcionário.",
         "description": "Adiciona um novo funcionário no banco de dados.",
         "operationId": "addFuncionario",
@@ -97,7 +116,9 @@
         }
       },
       "get": {
-        "tags": ["funcionarios"],
+        "tags": [
+          "funcionarios"
+        ],
         "summary": "Retorna a lista de funcionários.",
         "description": "Retorna uma lista com todos os funcionários no banco de dados.",
         "operationId": "getFuncionarios",
@@ -125,9 +146,11 @@
         }
       }
     },
-    "/funcionario/{id}": {
+    "/funcionarios/{id}": {
       "get": {
-        "tags": ["funcionarios"],
+        "tags": [
+          "funcionarios"
+        ],
         "summary": "Retorna um funcionário com ID específico.",
         "description": "Retorna o objeto JSON do funcionário com ID fornecido pelo usuário.",
         "operationId": "getFuncionario",
@@ -176,7 +199,9 @@
         }
       },
       "put": {
-        "tags": ["funcionarios"],
+        "tags": [
+          "funcionarios"
+        ],
         "summary": "Atualiza o funcionário com ID recebido.",
         "description": "Atualiza as informações do funcionário com ID recebido.",
         "operationId": "putFuncionario",
@@ -226,7 +251,9 @@
         }
       },
       "delete": {
-        "tags": ["funcionarios"],
+        "tags": [
+          "funcionarios"
+        ],
         "summary": "Deleta o funcionário com ID recebido.",
         "description": "Deleta o funcionário com ID recebido.",
         "operationId": "deleteFuncionario",
@@ -270,6 +297,34 @@
                   "$ref": "#/components/schemas/ErroNoServidor"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/funcionarios-total": {
+      "get": {
+        "tags": [
+          "funcionarios"
+        ],
+        "summary": "Retorna o total de funcionários.",
+        "description": "Retorna a quantidade de funcionários registrados no banco de dados.",
+        "operationId": "getTotalFuncionarios",
+        "responses": {
+          "200": {
+            "description": "Total de funcionários.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaDeFuncionarios"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor.",
+            "content": {
+              "application/json": {}
             }
           }
         }

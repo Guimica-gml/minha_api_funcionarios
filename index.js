@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const mysql = require("mysql2");
+const cors = require('cors');
 app.use(express.json());
-
+app.use(cors());
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -86,3 +87,13 @@ app.delete("/funcionarios/:id", (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
+app.get("/funcionarios-total", (_, res) =>{
+  const query = "SELECT COUNT(ID) AS total FROM funcionarios";
+  connection.query(query, (err, results) => {
+    if (err) {
+        return res.status(500).send("Erro no servidor");
+    }
+    res.status(200).json({result: results[0]});
+});
+})
