@@ -304,12 +304,13 @@
         body: JSON.stringify(user),
       });
 
-      if (!response.ok) {
-        alert('Erro ao atualizar usuário.');
-      }
       if (response.status == 400) {
         alert('Usuário não existe.');
       }
+      else if (!response.ok) {
+        alert('Erro ao atualizar usuário.');
+      }
+      
     } catch (error) {
       console.error('Erro de rede:', error);
       alert('Erro ao se comunicar com o servidor.');
