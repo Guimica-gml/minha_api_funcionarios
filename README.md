@@ -24,20 +24,22 @@ Por padrão o mysql tenta acessar o usuário `root` com senha `root`.
 Para iniciar o servidor basta usar o comando:
 
 ```
+$ npm install # only once, installs dependencies
 $ npm run dev
 ```
 
-## Para acessar a documentação
+## Para acessar o website e a documentação
 
 A documentação é feita utilizando a ferramenta [swagger](https://swagger.io/).
 
 ```
-$ npm run docs
+$ npm run ui
 ```
-Se o seu computador não estiver configurado para rodar python através do comando `python3` você terá que rodar o servidor web do python manualmente.
+Se o seu computador não estiver configurado para rodar python através do comando `python3` use o seguinte comando:
 
 ```
-$ python -m http.server 8080
+$ npm run ui3
 ```
 
-Depois basta apenas acessar o link `http://0.0.0.0:8080/swagger-docs.html` para ler a docuentação da API.
+Depois basta apenas acessar o link `http://0.0.0.0:8080/` para acessar o website.
+E `http://0.0.0.0:8080/swagger-docs.html` para ler a docuentação da API.
