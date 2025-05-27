@@ -41,5 +41,5 @@ Se o seu computador não estiver configurado para rodar python através do coman
 $ npm run ui3
 ```
 
-Depois basta apenas acessar o link `http://0.0.0.0:8080/` para acessar o website.
-E `http://0.0.0.0:8080/swagger-docs.html` para ler a docuentação da API.
+Depois basta acessar o link `http://0.0.0.0:8080/` para acessar o website.<br>
+E `http://0.0.0.0:8080/swagger-docs.html` para ler a documentação da API.
