@@ -7,7 +7,7 @@
         "start": "node server.js",
         "dev": "nodemon server.js",
         "ui": "python -m http.server 8080",
-        "ui3": "python -m http.server 8080"
+        "ui3": "python3 -m http.server 8080"
     },
     "keywords": [],
     "author": "Nicholas Almeida Albuquerque, Anderson dos Santos Ribeiro Júnior, Gabriel Bomfim Silva, Juan Carlos Barbosa de Jesus, Leandro Oliveira Martins Filho, Paulo Henrique Alves Rodrigues dos Santos, Yago Amâncio Ribeiro",
