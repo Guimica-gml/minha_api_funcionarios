@@ -30,7 +30,7 @@ app.post("/funcionarios", (req, res) => {
     if (err) {
       return res.status(500).json({ erro: "Erro no servidor" });
     }
-    res.status(201).json({ id: result.insertId, nome, cargo, salario });
+    return res.status(201).json({ id: result.insertId, nome, cargo, salario });
   });
 });
 
@@ -40,7 +40,7 @@ app.get("/funcionarios", (req, res) => {
       console.error("Erro ao buscar usuários:", err);
       return res.status(500).json({ erro: "Erro no servidor" });
     }
-    res.status(200).json(results);
+    return res.status(200).json(results);
   });
 });
 
@@ -54,7 +54,7 @@ app.get("/funcionarios/:id", (req, res) => {
         if (results.length <= 0) {
             return res.status(400).json({ "mensagem": `Não foi possível encontrar funcionário com id ${id}` });
         }
-        res.status(200).json(results[0]);
+        return res.status(200).json(results[0]);
     });
 });
 
@@ -67,9 +67,9 @@ app.put("/funcionarios/:id", (req, res) => {
           return res.status(500).json({ "erro": "Erro no servidor" });
       }
       if (results.affectedRows <= 0) {
-        res.status(400).json({ "mensagem": `Não foi possível encontrar funcionário com id ${id}` });
+        return res.status(400).json({ "mensagem": `Não foi possível encontrar funcionário com id ${id}` });
       }
-      res.status(200).json({ nome, cargo, salario });
+      return res.status(200).json({ nome, cargo, salario });
   });
 });
 
@@ -81,9 +81,9 @@ app.delete("/funcionarios/:id", (req, res) => {
             return res.status(500).send("Erro no servidor");
         }
         if (results.affectedRows <= 0) {
-            res.status(400).json({ "mensagem": `Não foi possível encontrar funcionário com id ${id}` });
+            return res.status(400).json({ "mensagem": `Não foi possível encontrar funcionário com id ${id}` });
         }
-        res.status(200).json({ "mensagem": `Usuário com id ${id} foi removido com sucesso!` });
+        return res.status(200).json({ "mensagem": `Usuário com id ${id} foi removido com sucesso!` });
     });
 });
 
@@ -97,6 +97,6 @@ app.get("/funcionarios-total", (_, res) =>{
     if (err) {
         return res.status(500).send("Erro no servidor");
     }
-    res.status(200).json({result: results[0]});
+    return res.status(200).json({result: results[0]});
 });
 })
